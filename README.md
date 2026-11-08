@@ -1,4 +1,19 @@
-# RTSU
+# RTSU (прототип) — бэкенд университетской системы
+
+Ранний прототип бэкенда информационной системы РТСУ на **FastAPI** и **PostgreSQL**. Пользователь входит по логину и паролю, получает JWT-токен и видит данные в зависимости от роли: студент, преподаватель или администратор.
+
+## Что реализовано
+
+- Вход по логину и паролю, JWT-токен на 30 минут, пароли хранятся как хеши argon2.
+- Три роли: студент, преподаватель, админ. Права проверяются на каждом запросе (`401` / `403`).
+- Админ создаёт студентов и преподавателей, самостоятельной регистрации нет.
+- Профили: `GET /students/me`, `GET /teachers/me`, `GET /users/me`.
+- Миграции Alembic, PostgreSQL в Docker Compose, Swagger-документация на `/docs`.
+- Слоистая архитектура: `domain` → `application` → `infrastructure` → `presentation`.
+
+**Стек:** Python, FastAPI, PostgreSQL, psycopg2 (SQL-запросы в репозиториях), Alembic, PyJWT, argon2-cffi, Docker Compose.
+
+Ниже: инструкции запуска для Windows, Mac и Linux, описание авторизации, эндпоинтов и структуры проекта.
 
 ## Запуск проекта на Windows
 
@@ -13,8 +28,8 @@
 Открой PowerShell и выполни:
 
 ```powershell
-git clone https://github.com/firdavsjons/RTSU.git
-cd RTSU
+git clone https://github.com/firdavsjons/RTSU_old.git
+cd RTSU_old
 py -3 -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
 Copy-Item .env.example .env
@@ -87,8 +102,8 @@ Remove-Item Env:PYTHONPATH
 Открой Terminal и выполни:
 
 ```bash
-git clone https://github.com/firdavsjons/RTSU.git
-cd RTSU
+git clone https://github.com/firdavsjons/RTSU_old.git
+cd RTSU_old
 python3 -m venv .venv
 .venv/bin/python -m pip install -r requirements.txt
 cp .env.example .env
@@ -159,8 +174,8 @@ PYTHONPATH=backend/python .venv/bin/python -m scripts.create_admin admin 'при
 Открой терминал и выполни:
 
 ```bash
-git clone https://github.com/firdavsjons/RTSU.git
-cd RTSU
+git clone https://github.com/firdavsjons/RTSU_old.git
+cd RTSU_old
 python3 -m venv .venv
 .venv/bin/python -m pip install -r requirements.txt
 cp .env.example .env
